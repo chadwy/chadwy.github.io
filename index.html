@@ -44,8 +44,8 @@
             min-height: 100vh;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            touch-action: manipulation;
-            overscroll-behavior-y: none;
+            touch-action: pan-y;
+            overscroll-behavior-y: contain;
         }
         
         .hero-bg {
@@ -388,6 +388,7 @@
             padding-bottom: 20px;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) var(--card-bg);
+            -webkit-overflow-scrolling: touch;
         }
         
         .projects-scroll-container::-webkit-scrollbar {
@@ -748,6 +749,17 @@
                 padding: 5rem 0;
             }
         }
+
+        @media (max-width: 768px) {
+            html {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            body {
+                overscroll-behavior-y: contain;
+                touch-action: pan-y;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1024,14 +1036,25 @@
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        gsap.to(window, {
-                            duration: 1,
-                            ease: "power3.out",
-                            scrollTo: {
-                                y: targetElement,
-                                offsetY: document.querySelector('.navbar').offsetHeight
-                            }
-                        });
+                        if (window.innerWidth <= 768) {
+                            // Простая реализация для мобильных устройств
+                            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            // Для десктопов используем GSAP
+                            gsap.to(window, {
+                                duration: 1,
+                                ease: "power3.out",
+                                scrollTo: {
+                                    y: targetElement,
+                                    offsetY: document.querySelector('.navbar').offsetHeight
+                                }
+                            });
+                        }
                     }
                 });
             });
@@ -1040,133 +1063,177 @@
         function initAnimations() {
             gsap.registerPlugin(ScrollTrigger);
             
-            ScrollTrigger.normalizeScroll(true);
+            // Упрощенные настройки ScrollTrigger
             ScrollTrigger.config({
                 autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
                 ignoreMobileResize: true
             });
             
-            gsap.to('.hero-content', {
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out"
-            });
-            
-            gsap.to('.hero-title', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                delay: 0.3,
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.hero-subtitle', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                delay: 0.6,
-                ease: "power3.out"
-            });
-            
-            gsap.to('.hero-cta', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                delay: 1.2,
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.section-title', {
-                scrollTrigger: {
-                    trigger: '.section',
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "back.out(1.2)",
-                stagger: 0.1
-            });
-            
-            gsap.to('.about-text', {
-                scrollTrigger: {
-                    trigger: '#about',
-                    start: "top 70%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power3.out"
-            });
-            
-            gsap.to('.skill-item', {
-                scrollTrigger: {
-                    trigger: '#skills',
-                    start: "top 70%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: {
-                    each: 0.1,
-                    from: "random"
-                },
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.project-card', {
-                scrollTrigger: {
-                    trigger: '#projects',
-                    start: "top 70%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.timeline-item', {
-                scrollTrigger: {
-                    trigger: '#experience',
-                    start: "top 70%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.3,
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.cta-section', {
-                scrollTrigger: {
-                    trigger: '#contact',
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "back.out(1.2)"
-            });
-            
-            gsap.to('.social-link', {
-                scrollTrigger: {
-                    trigger: 'footer',
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: "back.out(1.2)"
-            });
+            // Для мобильных устройств отключаем сложные анимации
+            if (window.innerWidth <= 768) {
+                // Простые анимации без привязки к скроллу
+                gsap.to('.hero-content', {
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+                
+                gsap.to('.hero-title', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.3,
+                    ease: "power2.out"
+                });
+                
+                gsap.to('.hero-subtitle', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.6,
+                    ease: "power2.out"
+                });
+                
+                gsap.to('.hero-cta', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 1.2,
+                    ease: "power2.out"
+                });
+                
+                // Анимация всех элементов сразу
+                gsap.to('.section-title, .about-text, .skill-item, .project-card, .timeline-item, .cta-section, .social-link', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "power2.out"
+                });
+            } else {
+                // Полные анимации для десктопов
+                gsap.to('.hero-content', {
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+                
+                gsap.to('.hero-title', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.3,
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.hero-subtitle', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.6,
+                    ease: "power3.out"
+                });
+                
+                gsap.to('.hero-cta', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 1.2,
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.section-title', {
+                    scrollTrigger: {
+                        trigger: '.section',
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.2)",
+                    stagger: 0.1
+                });
+                
+                gsap.to('.about-text', {
+                    scrollTrigger: {
+                        trigger: '#about',
+                        start: "top 70%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+                
+                gsap.to('.skill-item', {
+                    scrollTrigger: {
+                        trigger: '#skills',
+                        start: "top 70%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: {
+                        each: 0.1,
+                        from: "random"
+                    },
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.project-card', {
+                    scrollTrigger: {
+                        trigger: '#projects',
+                        start: "top 70%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.timeline-item', {
+                    scrollTrigger: {
+                        trigger: '#experience',
+                        start: "top 70%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.3,
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.cta-section', {
+                    scrollTrigger: {
+                        trigger: '#contact',
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.2)"
+                });
+                
+                gsap.to('.social-link', {
+                    scrollTrigger: {
+                        trigger: 'footer',
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "back.out(1.2)"
+                });
+            }
         }
         
         function debounce(func, wait = 100) {
@@ -1181,6 +1248,7 @@
         
         function handleResize() {
             createParticles();
+            initAnimations(); // Переинициализация анимаций при изменении размера
         }
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -1189,7 +1257,6 @@
             setupSmoothScrolling();
             initAnimations();
             
-            // Гарантированная обработка клика по кнопке Contact
             const contactButton = document.querySelector('.cta-button');
             if(contactButton) {
                 contactButton.addEventListener('click', function(e) {
