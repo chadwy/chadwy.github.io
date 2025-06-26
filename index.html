@@ -33,6 +33,7 @@
         
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         
         body {
@@ -44,9 +45,9 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             touch-action: manipulation;
+            overscroll-behavior-y: none;
         }
         
-        /* Modern Background Animation */
         .hero-bg {
             position: fixed;
             top: 0;
@@ -58,6 +59,7 @@
                 radial-gradient(circle at 80% 70%, rgba(177, 75, 244, 0.15) 0%, transparent 40%);
             z-index: -2;
             animation: gradientMove 20s infinite alternate;
+            will-change: transform;
         }
         
         @keyframes gradientMove {
@@ -65,7 +67,6 @@
             100% { transform: scale(1.2) rotate(2deg); }
         }
         
-        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -75,6 +76,7 @@
             overflow: hidden;
             z-index: -1;
             pointer-events: none;
+            contain: strict;
         }
         
         .particle {
@@ -84,6 +86,7 @@
             animation: float linear infinite;
             filter: blur(1px);
             pointer-events: none;
+            will-change: transform, opacity;
         }
         
         @keyframes float {
@@ -93,14 +96,13 @@
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
         
-        /* Main Container */
         .container {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 2rem;
+            overflow: hidden;
         }
         
-        /* Navbar - Modern Design */
         .navbar {
             position: fixed;
             top: 0;
@@ -116,6 +118,7 @@
             padding: 0 2rem;
             z-index: 90;
             border-bottom: 1px solid var(--card-border);
+            will-change: transform;
         }
         
         .logo {
@@ -191,7 +194,6 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        /* Hero Section - Centered Modern Design */
         .hero {
             display: flex;
             flex-direction: column;
@@ -214,6 +216,7 @@
             max-width: 800px;
             width: 100%;
             opacity: 0;
+            will-change: transform, opacity;
         }
         
         .hero-title {
@@ -229,6 +232,7 @@
             letter-spacing: -0.03em;
             opacity: 0;
             transform: translateY(20px);
+            will-change: transform, opacity;
         }
         
         .hero-subtitle {
@@ -244,6 +248,7 @@
             border-right: none;
             opacity: 0;
             transform: translateY(20px);
+            will-change: transform, opacity;
         }
         
         .typing-text {
@@ -283,6 +288,7 @@
             margin: 0 auto;
             opacity: 0;
             transform: translateY(20px);
+            will-change: transform, opacity;
         }
         
         .hero-cta:hover {
@@ -290,7 +296,6 @@
             box-shadow: 0 12px 30px rgba(122, 87, 255, 0.4);
         }
         
-        /* Section Styles */
         .section {
             padding: 4rem 0;
             scroll-margin-top: calc(var(--navbar-height) + 20px);
@@ -305,9 +310,9 @@
             text-align: center;
             opacity: 0;
             transform: translateY(30px);
+            will-change: transform, opacity;
         }
         
-        /* About Section - Improved Layout */
         .about-content {
             display: flex;
             flex-direction: column;
@@ -319,6 +324,7 @@
         .about-text {
             opacity: 0;
             transform: translateY(30px);
+            will-change: transform, opacity;
         }
         
         .about-text p {
@@ -328,7 +334,6 @@
             font-size: 1.1rem;
         }
         
-        /* Skills Grid - Fixed Text Overflow */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -348,6 +353,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(20px);
+            will-change: transform, opacity;
         }
         
         .skill-item:hover {
@@ -376,7 +382,6 @@
             text-overflow: ellipsis;
         }
         
-        /* Projects Section - Fixed Cards */
         .projects-scroll-container {
             width: 100%;
             overflow-x: auto;
@@ -419,6 +424,7 @@
             transform: translateY(30px);
             width: 300px;
             flex-shrink: 0;
+            will-change: transform, opacity;
         }
         
         .project-image {
@@ -466,7 +472,6 @@
             border: 1px solid rgba(122, 87, 255, 0.2);
         }
         
-        /* Experience Section - Modern Timeline */
         .timeline {
             position: relative;
             max-width: 800px;
@@ -489,6 +494,7 @@
             margin-bottom: 2rem;
             opacity: 0;
             transform: translateY(30px);
+            will-change: transform, opacity;
         }
         
         .timeline-date {
@@ -536,7 +542,6 @@
             line-height: 1.5;
         }
         
-        /* CTA Section - Modern Gradient */
         .cta-section {
             text-align: center;
             padding: 3rem 1.5rem;
@@ -548,6 +553,7 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
+            will-change: transform, opacity;
         }
         
         .cta-section::before {
@@ -599,6 +605,8 @@
             margin: 0 auto;
             max-width: 220px;
             width: 100%;
+            cursor: pointer !important;
+            pointer-events: auto !important;
         }
         
         .cta-button:hover {
@@ -606,7 +614,6 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* Footer - Modern Design */
         footer {
             text-align: center;
             padding: 2rem 0;
@@ -636,6 +643,7 @@
             backdrop-filter: blur(10px);
             opacity: 0;
             transform: translateY(20px);
+            will-change: transform, opacity;
         }
         
         .social-link:hover {
@@ -645,7 +653,6 @@
             border-color: var(--primary);
         }
         
-        /* Mobile Menu - Modern Design */
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -685,13 +692,11 @@
             transform: translateX(10px);
         }
         
-        /* Animations */
         @keyframes pulse {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
-        /* Responsive Design */
         @media (min-width: 768px) {
             .container {
                 padding: 0 3rem;
@@ -746,13 +751,10 @@
     </style>
 </head>
 <body>
-    <!-- Background Elements -->
     <div class="hero-bg"></div>
     <div class="particles" id="particles"></div>
     
-    <!-- Main Content -->
     <div class="container">
-        <!-- Navbar -->
         <nav class="navbar">
             <a href="#" class="logo">
                 <span class="logo-highlight">Chadwy</span>
@@ -771,7 +773,6 @@
             </button>
         </nav>
         
-        <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobileMenu">
             <a href="#about" class="mobile-menu-link">About</a>
             <a href="#skills" class="mobile-menu-link">Skills</a>
@@ -780,7 +781,6 @@
             <a href="#contact" class="mobile-menu-link">Contact</a>
         </div>
         
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
                 <h1 class="hero-title">Hi, I'm Chadwy</h1>
@@ -793,7 +793,6 @@
             </div>
         </section>
         
-        <!-- About Section -->
         <section class="section" id="about">
             <h2 class="section-title">About Me</h2>
             
@@ -855,7 +854,6 @@
             </div>
         </section>
         
-        <!-- Projects Section -->
         <section class="section" id="projects">
             <h2 class="section-title">Featured Projects</h2>
             
@@ -910,7 +908,6 @@
             </div>
         </section>
         
-        <!-- Experience Section -->
         <section class="section" id="experience">
             <h2 class="section-title">My Journey</h2>
             
@@ -941,55 +938,51 @@
             </div>
         </section>
         
-        <!-- CTA Section -->
         <section class="cta-section" id="contact">
             <h2 class="cta-text">Let's build something together</h2>
             <p class="cta-description">Have a project in mind or want to discuss potential collaboration? I'd love to hear from you!</p>
-            <a href="https://t.me/chadwy" class="cta-button">
+            <a href="https://t.me/chadwy" class="cta-button" target="_blank" rel="noopener noreferrer">
                 Contact me <i class="fab fa-telegram"></i>
             </a>
         </section>
         
-        <!-- Footer -->
         <footer>
             <div class="social-links">
-                <a href="https://t.me/chadwy" class="social-link"><i class="fab fa-telegram"></i></a>
+                <a href="https://t.me/chadwy" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-telegram"></i>
+                </a>
             </div>
             <p>© 2025 Chadwy. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        // Create floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = window.innerWidth < 768 ? 20 : 40;
+            
+            particlesContainer.innerHTML = '';
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Random size between 2 and 6px
                 const size = Math.random() * 4 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
-                // Random position
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                // Random animation duration
                 const duration = Math.random() * 25 + 15;
                 particle.style.animationDuration = `${duration}s`;
                 
-                // Random delay
                 particle.style.animationDelay = `${Math.random() * 5}s`;
                 
                 particlesContainer.appendChild(particle);
             }
         }
         
-        // Mobile Menu Toggle
         function setupMobileMenu() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
@@ -997,7 +990,6 @@
             mobileMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('active');
                 
-                // Animate hamburger icon
                 const spans = mobileMenuBtn.querySelectorAll('span');
                 if (mobileMenu.classList.contains('active')) {
                     spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
@@ -1010,7 +1002,6 @@
                 }
             });
             
-            // Close menu when clicking on links
             const mobileLinks = document.querySelectorAll('.mobile-menu-link');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -1023,7 +1014,6 @@
             });
         }
         
-        // Smooth scrolling for anchor links
         function setupSmoothScrolling() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
@@ -1034,21 +1024,28 @@
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - document.querySelector('.navbar').offsetHeight,
-                            behavior: 'smooth'
+                        gsap.to(window, {
+                            duration: 1,
+                            ease: "power3.out",
+                            scrollTo: {
+                                y: targetElement,
+                                offsetY: document.querySelector('.navbar').offsetHeight
+                            }
                         });
                     }
                 });
             });
         }
         
-        // Initialize animations with GSAP
         function initAnimations() {
-            // Register ScrollTrigger plugin
             gsap.registerPlugin(ScrollTrigger);
             
-            // Hero section animation
+            ScrollTrigger.normalizeScroll(true);
+            ScrollTrigger.config({
+                autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+                ignoreMobileResize: true
+            });
+            
             gsap.to('.hero-content', {
                 opacity: 1,
                 duration: 1,
@@ -1079,7 +1076,6 @@
                 ease: "back.out(1.2)"
             });
             
-            // About section animation
             gsap.to('.section-title', {
                 scrollTrigger: {
                     trigger: '.section',
@@ -1105,7 +1101,6 @@
                 ease: "power3.out"
             });
             
-            // Skills grid animation
             gsap.to('.skill-item', {
                 scrollTrigger: {
                     trigger: '#skills',
@@ -1122,7 +1117,6 @@
                 ease: "back.out(1.2)"
             });
             
-            // Projects animation
             gsap.to('.project-card', {
                 scrollTrigger: {
                     trigger: '#projects',
@@ -1136,7 +1130,6 @@
                 ease: "back.out(1.2)"
             });
             
-            // Experience timeline animation
             gsap.to('.timeline-item', {
                 scrollTrigger: {
                     trigger: '#experience',
@@ -1150,7 +1143,6 @@
                 ease: "back.out(1.2)"
             });
             
-            // CTA section animation
             gsap.to('.cta-section', {
                 scrollTrigger: {
                     trigger: '#contact',
@@ -1163,7 +1155,6 @@
                 ease: "back.out(1.2)"
             });
             
-            // Footer animation
             gsap.to('.social-link', {
                 scrollTrigger: {
                     trigger: 'footer',
@@ -1178,12 +1169,35 @@
             });
         }
         
-        // Initialize when DOM is loaded
+        function debounce(func, wait = 100) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(this, args);
+                }, wait);
+            };
+        }
+        
+        function handleResize() {
+            createParticles();
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             setupMobileMenu();
             setupSmoothScrolling();
             initAnimations();
+            
+            // Гарантированная обработка клика по кнопке Contact
+            const contactButton = document.querySelector('.cta-button');
+            if(contactButton) {
+                contactButton.addEventListener('click', function(e) {
+                    window.open(this.href, '_blank');
+                });
+            }
+            
+            window.addEventListener('resize', debounce(handleResize));
         });
     </script>
 </body>
